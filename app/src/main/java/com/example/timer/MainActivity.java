@@ -1,9 +1,12 @@
 package com.example.timer;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.PersistableBundle;
 import android.view.View;
 import android.widget.TextView;
 
@@ -20,7 +23,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         textView = findViewById(R.id.textViewTimer);
+        if(savedInstanceState != null) {
+            second = savedInstanceState.getInt("second");
+            isRunning = savedInstanceState.getBoolean("isRunning");
+        }
+
         runTimer();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("second",second);
+        outState.putBoolean("isRunning", isRunning);
     }
 
     public void OnClickStartTimer(View view) {
