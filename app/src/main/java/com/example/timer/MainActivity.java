@@ -34,14 +34,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onPause() {
+        super.onPause();
         wasRunning = isRunning;
         isRunning = false;
     }
 
     @Override
-    protected void onStart() {
+    protected void onResume() {
+        super.onResume();
         super.onStart();
         isRunning = wasRunning;
     }
