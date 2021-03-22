@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     private int second;
     private boolean isRunning;
     private TextView textView;
+    private boolean wasRunning = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,15 +27,30 @@ public class MainActivity extends AppCompatActivity {
         if(savedInstanceState != null) {
             second = savedInstanceState.getInt("second");
             isRunning = savedInstanceState.getBoolean("isRunning");
+            wasRunning = savedInstanceState.getBoolean("wasRunning");
         }
 
         runTimer();
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        wasRunning = isRunning;
+        isRunning = false;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        isRunning = wasRunning;
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt("second",second);
+        outState.putBoolean("wasRunning", wasRunning);
         outState.putBoolean("isRunning", isRunning);
     }
 
